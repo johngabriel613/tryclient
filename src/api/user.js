@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'https://testapi-t46t.onrender.com';
+const apiUrl = 'https://testapi-t46t.onrender.com/api';
 
 export const fetchUser = async() => {
   try{
