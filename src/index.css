@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  p{
+    @apply leading-relaxed;
+  }
+}
+
+@layer components{
+  .container {
+    @apply max-w-6xl;
+  }
+}
+
+@layer utilities {
+  .btn{
+    @apply rounded-md py-2 px-4;
+  }
+
+  .primary{
+    @apply bg-purple-600 text-white font-medium;
+  }
+
+  .secondary{
+    @apply  text-gray-600 font-medium border border-gray-300;
+  }
+
+  .text-primary{
+    @apply text-purple-600;
+  }
+
+  #filter:checked ~ .dot{
+    @apply translate-x-full ;
+  }
+
+  #filter:checked ~ .toggle{
+    @apply bg-purple-600;
+  }
+}
