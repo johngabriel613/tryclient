@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const apiUrl = 'https://testapi-t46t.onrender.com/api';
+const apiUrl = 'https://api.pccheckr.tech/api';
 
 export const addComponent = async(componentType, itemId, navigate, setToastMessage) => {
   const data = {type: componentType,
