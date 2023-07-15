@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const apiUrl = 'https://api.pccheckr.tech/api';
+const apiUrl = 'http://localhost:3000/api' || 'https://api.pccheckr.tech/api';
 
 export const fetchUser = async() => {
   try{

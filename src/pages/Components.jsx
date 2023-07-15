@@ -61,10 +61,10 @@ const Components = () => {
 
   
   return (
-    <div className='pt-20 md:pt-20 pb-10'>
-      <section className='bg-gradient-to-br from-transparent to-purple-100 py-10'>
+    <div className='pt-14 md:pt-16 pb-10'>
+      <section className='bg-gradient-to-br from-transparent to-purple-200 py-10'>
         <div className="container relative grid gap-2">
-          <h2 className='text-2xl font-bold text-slate-800 mb-2 md:text-3xl'>Components &gt; {componentTypeName}</h2>
+          <h2 className='text-2xl font-bold text-slate-800 mb-2 md:text-3xl'>{componentTypeName}'s</h2>
           <form className="flex" onSubmit={handleSearch}>
             <div className="flex w-full" >
               <select className="py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100" name="components" onChange={(e) => navigate(`/components/${e.target.value.toLowerCase()}`)} value={componentTypeName}>

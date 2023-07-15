@@ -21,7 +21,8 @@ const BuilderSummary = ({ components }) => {
 
 
   return (
-    <table className='w-full'>
+    <div className='w-full inline-block rounded-lg border shadow overflow-hidden'>
+      <table className='w-full'>
       <thead>
         <tr>
           <th className='bg-slate-800 text-white py-3 px-3' colSpan="2">
@@ -57,6 +58,7 @@ const BuilderSummary = ({ components }) => {
         </tr>
       </tfoot>
     </table>
+    </div>
   );
 };
 
