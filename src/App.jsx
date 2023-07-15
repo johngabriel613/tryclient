@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import Home from './pages/Home'
 import Builder from "./pages/Builder"
 import Components from "./pages/Components"
-import NotFound from "./pages/Notfound"
+import NotFound from "./pages/NotFound"
 import Cpu from "./components/Cpu"
 import Motherboard from "./components/Motherboard"
 import Memory from "./components/Memory"
