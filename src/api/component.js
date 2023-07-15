@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const apiUrl = 'http://localhost:3000/api';
+const apiUrl = 'https://testapi-t46t.onrender.com';
 
 export const addComponent = async(componentType, itemId, navigate, setToastMessage) => {
   const data = {type: componentType,
