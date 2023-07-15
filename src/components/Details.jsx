@@ -151,7 +151,7 @@ const Details = ({componentType}) => {
   }else{
     return (
       <div className='pt-20 md:pt-20'>
-        <h1>Not found</h1>
+        <h1>404 Not found</h1>
       </div>
     )
   }
