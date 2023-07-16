@@ -19,5 +19,7 @@ import infoRed from './infoRed.svg'
 import power from './power.svg'
 import link from './link.svg'
 import nothingFound from './nothingFound.svg'
+import bgTeam from './bg-team.svg'
+import bgTeamMobile from './bg-team-mobile.svg'
 
-export {chevronDown, logoLight, logoDark, menu, close, cpu, motherboard, gpu, memory, psu, hero, plan, choose, build, copy, createNew, infoGreen, infoRed, power, link, nothingFound}
+export {chevronDown, logoLight, logoDark, menu, close, cpu, motherboard, gpu, memory, psu, hero, plan, choose, build, copy, createNew, infoGreen, infoRed, power, link, nothingFound, bgTeam, bgTeamMobile}
