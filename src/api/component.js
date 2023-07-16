@@ -1,7 +1,7 @@
 import axios from "axios"
 import toast from "react-hot-toast"
 
-const apiUrl = 'http://localhost:3000/api' || 'https://api.pccheckr.tech/api';
+const apiUrl = 'https://api.pccheckr.tech/api';
 
 export const addComponent = async (componentType, itemId, navigate) => {
   const data = {
