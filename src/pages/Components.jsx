@@ -2,19 +2,21 @@ import { Outlet, Link } from "react-router-dom"
 import { navLinks } from "../constant/constant"
 import { useEffect, useState } from "react"
 import { useAuth } from "../context/AuthContext"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate} from "react-router-dom"
 import { fetchUser } from "../api/user"
+import { Toaster, toast} from "react-hot-toast"
+import { searchQuery } from "../utils/searchQuery"
 
 const Components = () => {
   const {userData, setUserData} = useAuth();
   const [isFilterActive, setIsFilterActive] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('')
+  const searchValue = searchQuery('search')
+  const [searchString, setSearchString] = useState(searchValue || '')
   const [searchData, setSearchData] = useState('')
   const navigate = useNavigate()
   const location = useLocation();
   const pathName = location.pathname;
   const componentName = pathName.split('/components/')[1];
-
 
   const auth = async() => {
     const user = await fetchUser()
@@ -33,7 +35,7 @@ const Components = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchData(searchQuery)
+    navigate(`?search=${searchString}`)
   }
 
   let componentTypeName;
@@ -62,12 +64,13 @@ const Components = () => {
   
   return (
     <div className='pt-14 md:pt-16 pb-10'>
+      <Toaster/>
       <section className='bg-gradient-to-br from-transparent to-purple-200 py-10'>
         <div className="container relative grid gap-2">
           <h2 className='text-2xl font-bold text-slate-800 mb-2 md:text-3xl'>{componentTypeName}'s</h2>
           <form className="flex" onSubmit={handleSearch}>
             <div className="flex w-full" >
-              <select className="py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100" name="components" onChange={(e) => navigate(`/components/${e.target.value.toLowerCase()}`)} value={componentTypeName}>
+              <select className="py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100" name="components" onChange={(e) => {setSearchString(''); navigate(`/components/${e.target.value.toLowerCase()}`)}} value={componentTypeName}>
                 {navLinks.map(link => (
                   link.dropdowns && link.dropdowns.map((dropdown, index) => (
                     <option key={index} value={dropdown.name}>{dropdown.name}</option>  
@@ -75,7 +78,7 @@ const Components = () => {
                 ))}
               </select>
               
-              <input className="w-full p-2 border text-sm md:text-base" type="search" onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search component here..."/>
+              <input className="w-full p-2 border text-sm md:text-base" type="search" onChange={(e) => setSearchString(e.target.value)} value={searchString} placeholder="Search component here..."/>
             </div>
             <button className="rounded-r-lg primary flex items-center gap-1 px-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="m21 21l-4.343-4.343m0 0A8 8 0 1 0 5.343 5.343a8 8 0 0 0 11.314 11.314Z"/></svg>
@@ -97,7 +100,7 @@ const Components = () => {
             </div>
         </div>
       </section>
-      <Outlet context={[isFilterActive, setIsFilterActive, userData, searchData]}/>
+      <Outlet context={[isFilterActive, setIsFilterActive, userData, searchValue]}/>
     </div>
   )
 }

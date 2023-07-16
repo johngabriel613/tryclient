@@ -12,7 +12,8 @@ const Memory = (state) => {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const {setToastMessage} = useToast();
-  const [isFilterActive, setIsFilterActive, userData, searchData] = useOutletContext();
+  const [isFilterActive, setIsFilterActive, userData, searchValue] = useOutletContext();
+
 
   const queryParams = {
     ram_freq : userData?.components[1]?.id?.max_ram_freq || userData?.components[0]?.id?.max_ram_freq, //motherboard and cpu ram freq
@@ -21,12 +22,11 @@ const Memory = (state) => {
       userData?.components[0]?.id?.ram_type //motherboard ram type
     ].filter(Boolean)
     .filter((value, index, self) => self.indexOf(value) === index),
-    search: searchData || null
   }
 
   const fetchMemoryData = async() =>{
     try{
-      const response = await fetchData('Memory', isFilterActive ? queryParams : {})
+      const response = await fetchData('Memory',searchValue, isFilterActive ? queryParams : {})
       setMemoryData(response)
     }catch(error){
       console.error(error.message)
@@ -35,7 +35,7 @@ const Memory = (state) => {
 
   useEffect(() => {
     fetchMemoryData()
-  },[userData, isFilterActive, searchData])
+  },[userData, isFilterActive, searchValue])
 
   useEffect(() => {
     if(memoryData){

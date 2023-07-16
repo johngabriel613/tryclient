@@ -7,13 +7,12 @@ import { useAuth } from '../context/AuthContext';
 import { fetchUser } from '../api/user';
 import { addComponent } from '../api/component';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '../context/ToastContext'
+import { Toaster } from 'react-hot-toast';
 
 const Details = ({componentType}) => {
   const {userData, setUserData} = useAuth()
   const {id} = useParams()
   const [componentData, setComponentData] = useState({})
-  const {setToastMessage} = useToast();
   const navigate = useNavigate()
 
   const fetchComponentData = async() => {
@@ -27,8 +26,8 @@ const Details = ({componentType}) => {
 
   const TableRow = ({ label, value }) => (
     <tr>
-      <td className="border border-slate-300 p-2 text-sm md:text-base">{label}:</td>
-      <td className="border border-slate-300 p-2 text-sm md:text-base">{value}</td>
+      <td className="border border-slate-300 p-2 text-sm md:text-base whitespace-normal break-words">{label}:</td>
+      <td className="border border-slate-300 p-2 text-sm md:text-base whitespace-normal break-words">{value}</td>
     </tr>
   );
 
@@ -75,19 +74,38 @@ const Details = ({componentType}) => {
   if(componentData){
     return (
       <div className='pt-20 md:pt-20 pb-10'>
-        <section className='container'>
-          <button onClick={() => navigate(-1)} className='flex items-center gap-2 text-lg text-gray-500 mb-6'>
+        <Toaster/>
+        <section className='container min-h-screen'>
+          <button onClick={() => navigate(-1)} className='flex items-center gap-2 text-md text-gray-500 mb-6 md:text-lg'>
             <Icon icon="ic:round-arrow-back" />
             Back
           </button>
-          <div className='flex flex-col gap-6 md:flex-row'>
-            <div className='w-full  mx-auto md:w-1/3'>
-              <img src={componentData.imageSrc} className='w-full max-w-[150px] mx-auto md:mx-0 md:max-w-full' alt="" />
+          <div className='flex flex-col gap-4 md:flex-row'>
+            <div className='w-full mx-auto md:w-1/3'>
+              <img src={componentData.imageSrc} className='w-full max-w-[150px] md:max-w-full bg-red-300' alt="" />
+              <a className='line-clamp-2 text-sm italic underline' href="https://easypc.com.ph" target='_blank'>{`${componentData.imageSrc}`}</a>
             </div>
-            <div className='w-full md:w-2/3 flex flex-col gap-4'>
-              <h3 className='font-semibold text-lg line-clamp-2 md:text-xl'>{componentData.name}</h3>
-              <p className='text-green-800 md:text-lg'>{formatPrice(componentData.price)}</p>
-              <table className="border border-slate-400 w-full">
+            <div className='w-full md:w-2/3 flex flex-col gap-6'>
+              <div className="flex flex-col items-start gap-2 md:flex-row md:justify-between md:items-center">
+                <div className="w-full md:w-2/3">
+                  <p className='text-gray-500 mb-1'>{componentTypeName}</p>
+                  <h3 className='font-semibold text-lg line-clamp-2 md:text-xl mb-2'>{componentData.name}</h3>
+                  <p className='text-green-800 md:text-xl'>{formatPrice(componentData.price)}</p>
+                </div>
+                {isComponentAdded ? (
+                  <button className="btn primary text-sm flex items-center gap-2 whitespace-nowrap"  disabled>
+                    Already added to Builder
+                    <Icon icon="ri:check-double-fill" width={22} height={22}/>
+                  </button>
+                ) : (
+                  <button className="btn primary text-sm flex items-center gap-2 whitespace-nowrap" onClick={() => addComponent(componentTypeName, componentData._id, navigate)}>
+                    <Icon icon="ic:round-add" width={22} height={22}/>
+                    Add to Builder
+                  </button>
+                )}
+              </div>
+              <div className="w-full inline-block rounded-lg border overflow-hidden">
+              <table className="w-full">
                 <thead>
                   <tr>
                     <th className='text-start p-2 bg-slate-800 text-white' colSpan="2">Specifications</th>
@@ -103,14 +121,11 @@ const Details = ({componentType}) => {
                   {componentData.socket_type && (
                     <TableRow label="socket type" value={componentData.socket_type} />
                   )}
-                  {componentData.max_ram_freq && (
-                    <TableRow label="max ram frequency" value={`${componentData.max_ram_freq}Mhz`} />
-                  )}
                   {componentData.ram_type && (
                     <TableRow label="ram type" value={Array.isArray(componentData.ram_type) ? componentData.ram_type.join(', ') : componentData.ram_type}/>
                   )}
                   {componentData.ram_freq && (
-                    <TableRow label="ram frequency" value={`${componentData.ram_freq}Mhz`} />
+                    <TableRow label="ram frequency" value={`${Array.isArray(componentData.ram_freq) ? componentData.ram_freq.join(' Mhz/ ') : componentData.ram_freq} Mhz`} />
                   )}
                   {componentData.ram_channel && (
                     <TableRow label="ram channel" value={componentData.ram_channel} />
@@ -121,8 +136,11 @@ const Details = ({componentType}) => {
                   {componentData.pcie_x16 !== undefined && (
                     <TableRow label="pcie x16" value={componentData.pcie_x16.toString()} />
                   )}
+                  {componentData.type && (
+                  <TableRow label="type" value={`${componentData.type}`} />
+                  )}
                   {componentData.memory_size && (
-                  <TableRow label="memory size" value={`${componentData.memory_size}GB`} />
+                  <TableRow label="VRAM" value={`${componentData.memory_size}GB`} />
                   )}
                   {componentData.wattage && (
                     <TableRow label="wattage" value={`${componentData.wattage}Watts`} />
@@ -132,17 +150,7 @@ const Details = ({componentType}) => {
                   )}
                 </tbody>
               </table>
-              {isComponentAdded ? (
-                <button className="btn primary text-sm self-end flex items-center gap-2 md:text-base" disabled>
-                  Already added to Builder
-                  <Icon icon="ri:check-double-fill" width={22} height={22}/>
-                </button>
-              ) : (
-                <button className="btn primary text-sm self-end flex items-center gap-2 md:text-base" onClick={() => addComponent(componentTypeName, componentData._id, navigate, setToastMessage)}>
-                  <Icon icon="ic:round-add" width={22} height={22}/>
-                  Add to Builder
-                </button>
-              )}
+              </div>
             </div>
           </div>
         </section>

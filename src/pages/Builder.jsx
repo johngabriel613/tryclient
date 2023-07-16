@@ -3,7 +3,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import { copy, createNew, infoGreen, infoRed, link, power } from '../assets';
 import BuilderCard from '../components/BuilderCard';
 import CompatiblityNotes from '../components/CompatiblityNotes';
-import { useToast } from '../context/ToastContext';
 import { checkCPUAndMotherboardCompatibility, checkCPUAndMemoryCompatibility, checkMotherboardAndMemoryCompatibility, checkGPUAndMotherboardCompatibility, checkPsuCompatibility} from '../utils/compatibilityChecker';
 import BuilderSummary from '../components/BuilderSummary';
 import { useAuth } from '../context/AuthContext';
@@ -14,7 +13,6 @@ import BuilderCardLoading from '../components/BuilderCardLoading';
 
 const Builder = () => {
   const {userData, setUserData} = useAuth()
-  const {toastMessage, clearToastMessage} = useToast()
   const [wattage, setWattage] = useState()
   const [compatibility, setCompatibility] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -92,14 +90,6 @@ const Builder = () => {
     }
   }
 
-  //Toast notification after a new component is added
-  useEffect(() => {
-    if(toastMessage){
-      toast.success(toastMessage)
-      clearToastMessage()
-    }
-  }, [toastMessage, clearToastMessage]);
-  
   const openModal = () => {
     setIsModalOpen(true);
   };

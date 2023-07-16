@@ -7,26 +7,30 @@ import NothingFound from './NothingFound'
 import Loading from './Loading'
 
 const Motherboard = () => {
-  const [isFilterActive, setIsFilterActive, userData, searchData] = useOutletContext();
+  const [isFilterActive, setIsFilterActive, userData,searchValue] = useOutletContext();
   const [motherboardData, setMotherboardData] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const {setToastMessage} = useToast()
 
+
   const queryParams = {
     socket_type: userData?.components[0]?.id?.socket_type, //cpu socket type
-    ram_type: [
-      ...(userData?.components[0]?.id?.ram_type || []) ||//cpu ram type
-      userData?.components[2]?.id?.ram_type //memory ram type
-    ].filter(Boolean)
-    .filter((value, index, self) => self.indexOf(value) === index),
-    ram_freq : userData?.components[0]?.id?.max_ram_freq || userData?.components[2]?.id?.ram_freq, //cpu and memory ram freq
-    search: searchData || null
+
+    ram_type: [...(userData?.components[0]?.id?.ram_type || []) ||//cpu ram type
+              userData?.components[2]?.id?.ram_type] //memory ram type
+              .filter(Boolean)
+              .filter((value, index, self) => self.indexOf(value) === index),
+
+    ram_freq : [...(userData?.components[0]?.id?.ram_freq || []) || //cpu ram freq
+                userData?.components[2]?.id?.ram_freq] //memory ram freq
+                .filter(Boolean)
+                .filter((value, index, self) => self.indexOf(value) === index), 
   }
 
   const fetcthMotherboardData = async() => {
     try{
-      const response = await fetchData('Motherboard', isFilterActive ? queryParams : {})
+      const response = await fetchData('Motherboard',searchValue, isFilterActive ? queryParams : {})
       setMotherboardData(response)
     }catch(error){
       console.error(error.message)
@@ -35,7 +39,7 @@ const Motherboard = () => {
 
   useEffect(() => {
     fetcthMotherboardData()
-  },[userData, isFilterActive, searchData])
+  },[userData, isFilterActive, searchValue])
 
   useEffect(() => {
     if(motherboardData){

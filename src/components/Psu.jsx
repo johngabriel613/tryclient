@@ -7,13 +7,14 @@ import { formatPrice } from '../utils/formatPrice'
 import NothingFound from './NothingFound'
 import Loading from './Loading'
 
+
 const Psu = () => {
   const [psuData, setPsuData] = useState();
   const [isLoading, setIsLoading] = useState(true)
   const [wattage, setWattage] = useState()
   const navigate = useNavigate();
   const {setToastMessage} = useToast();
-  const [isFilterActive, setIsFilterActive, userData, searchData] = useOutletContext();
+  const [isFilterActive, setIsFilterActive, userData, searchValue] = useOutletContext();
 
   //Calculating the estimated wattage
   const calculateWattage = () => {
@@ -33,7 +34,7 @@ const Psu = () => {
 
   const fetchPsuData = async() =>{
     try{
-      const response = await fetchData('psu', isFilterActive ? queryParams : {})
+      const response = await fetchData('psu', searchValue, isFilterActive ? queryParams : {})
       setPsuData(response)
     }catch(error){
       console.error(error.message)
@@ -48,7 +49,7 @@ const Psu = () => {
 
   useEffect(() => {
     fetchPsuData()
-  },[isFilterActive, wattage])
+  },[isFilterActive, wattage, searchValue])
 
   useEffect(() => {
     if(psuData){

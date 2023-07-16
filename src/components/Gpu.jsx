@@ -4,7 +4,6 @@ import { useToast } from '../context/ToastContext'
 import { useEffect, useState } from 'react'
 import { fetchData } from '../api/component'
 import { formatPrice } from '../utils/formatPrice'
-import { gpu } from '../assets'
 import NothingFound from './NothingFound'
 import Loading from './Loading'
 
@@ -13,18 +12,17 @@ const Gpu = (state) => {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const {setToastMessage} = useToast();
-  const [isFilterActive, setIsFilterActive, userData, searchData] = useOutletContext();
+  const [isFilterActive, setIsFilterActive, userData, searchValue] = useOutletContext();
 
   const queryParams = {
     pcie_x16 : userData?.components[1]?.id?.pcie_x16, //motherboard pcie_x16
-    search: searchData || null
   }
 
 
 
   const fetchGpuData = async() =>{
     try{
-      const response = await fetchData('gpu', isFilterActive ? queryParams : {})
+      const response = await fetchData('gpu', searchValue, isFilterActive ? queryParams : {})
       setGpuData(response)
     }catch(error){
       console.error(error.message)
@@ -33,7 +31,7 @@ const Gpu = (state) => {
 
   useEffect(() => {
     fetchGpuData()
-  },[userData, isFilterActive, searchData])
+  },[userData, isFilterActive, searchValue])
 
   useEffect(() => {
     if(gpuData){

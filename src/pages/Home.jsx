@@ -9,13 +9,13 @@ const Home = () => {
       <section>
         <div className="container grid place-items-center gap-4 mb-12">
           <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1">
-            <span className="text-xs bg-purple-600 rounded-full text-white px-4 py-1.5">Beta</span>
+            <span className="text-xs bg-purple-600 rounded-full text-white px-4 py-1.5">New</span>
             <p className="text-sm font-medium text-slate-600">
               No account required.
             </p>
             <Icon icon="ic:round-chevron-right" width="24" height="24" className="text-slate-600"/>
           </div>
-          <div className="w-full max-w-[850px] grid gap-2 text-center">
+          <div className="w-full max-w-[850px] grid gap-4 text-center mb-2">
             <h1 className="text-5xl font-extrabold text-slate-800 md:text-6xl">Plan, Choose, and <span className="text-primary">Build</span></h1>
             <p className="text-slate-600 text-sm md:text-base">Discover the best parts <span className="text-primary">that fit your budget</span>, and start building your dream PC today! With our compatibility checker, you can <span className="text-primary">build with confidence</span>.</p>
           </div>
