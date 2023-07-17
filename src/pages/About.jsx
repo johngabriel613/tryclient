@@ -14,7 +14,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className={`py-12 bg-[url('./src/assets/bg-team-mobile.svg')] md:bg-[url('./src/assets/bg-team.svg')] bg-cover bg-center bg-no-repeat`  }>
+      <section className={`py-12`} style={{background: `url(${bgTeam}) center no-repeat`, backgroundSize: 'cover'}}>
         <div className="container grid place-items-center">
           <div className="text-center mb-6">
             <h2 className='text-2xl md:text-3xl font-bold text-slate-800'>Our Team</h2>
