@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { hero } from "../assets"
 import { steps } from "../constant/constant"
 import { Icon } from '@iconify/react';
+import 'animate.css';
+
 
 const Home = () => {
   return (
@@ -16,10 +18,10 @@ const Home = () => {
             <Icon icon="ic:round-chevron-right" width="24" height="24" className="text-slate-600"/>
           </div>
           <div className="w-full max-w-[850px] grid gap-4 text-center mb-2">
-            <h1 className="text-5xl font-extrabold text-slate-800 md:text-6xl">Plan, Choose, and <span className="text-primary">Build</span></h1>
-            <p className="text-slate-600 text-sm md:text-base">Discover the best parts <span className="text-primary">that fit your budget</span>, and start building your dream PC today! With our compatibility checker, you can <span className="text-primary">build with confidence</span>.</p>
+            <h1 className="text-5xl font-extrabold text-slate-800 md:text-6xl animate__animated animate__fadeInUp ">Plan, Choose, and <span className="text-primary">Build</span></h1>
+            <p className="text-slate-600 text-sm md:text-base animate__animated animate__fadeInUp ">Discover the best parts <span className="text-primary">that fit your budget</span>, and start building your dream PC today! With our compatibility checker, you can <span className="text-primary">build with confidence</span>.</p>
           </div>
-          <div className="w-full flex flex-col gap-2 text-center md:w-fit md:flex-row">
+          <div className="w-full flex flex-col gap-2 text-center md:w-fit md:flex-row animate__animated animate__fadeInUp">
             <Link to='/builder' className="btn primary">Build now</Link>
             <Link to='/components/cpu' className="btn secondary flex items-center justify-center gap-1">
               <Icon icon="ph:squares-four-fill" />

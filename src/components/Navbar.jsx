@@ -48,7 +48,7 @@ const Navbar = () => {
               </li>
             ) : (
               <li key={index} className='cursor-pointer' onClick={handleDropdown}> 
-                <div className='flex items-center mb-1 hover:text-slate-800 text-base md:text-sm'>
+                <div className='flex items-center select-none mb-1 hover:text-slate-800 text-base md:text-sm'>
                   {link.name}
                   <Icon icon="majesticons:chevron-down-line" width={22} height={22}/>
                 </div>
